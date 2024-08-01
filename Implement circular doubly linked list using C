@@ -9,51 +9,64 @@ struct Node {
 
 struct Node* head = NULL;
 
-void insertAtEnd(int data) {
+void insertAtBeginning(int value) {
     struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
-    struct Node* last = head;
-
-    newNode->data = data;
-    newNode->next = head;
-    newNode->prev = NULL;
-
+    newNode->data = value;
     if (head == NULL) {
         head = newNode;
         head->next = head;
         head->prev = head;
     } else {
-        while (last->next != head) {
-            last = last->next;
-        }
-
-        last->next = newNode;
-        newNode->prev = last;
+        struct Node* last = head->prev;
+        newNode->next = head;
         head->prev = newNode;
+        newNode->prev = last;
+        last->next = newNode;
+        head = newNode;
     }
 }
 
 void display() {
-    struct Node* temp = head;
-
-    if (head != NULL) {
-        do {
-            printf("%d ", temp->data);
-            temp = temp->next;
-        } while (temp != head);
+    if (head == NULL) {
+        printf("List is empty.\n");
+        return;
     }
+    struct Node* temp = head;
+    do {
+        printf("%d ", temp->data);
+        temp = temp->next;
+    } while (temp != head);
+    printf("\n");
 }
 
 int main() {
-    insertAtEnd(1);
-    insertAtEnd(2);
-    insertAtEnd(3);
-    insertAtEnd(4);
+    int choice, value;
+    do {
+        printf("1. Insert at the beginning\n");
+        printf("2. Display\n");
+        printf("3. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
 
-    printf("Circular Doubly Linked List: ");
-    display();
+        switch (choice) {
+            case 1:
+                printf("Enter the value to insert: ");
+                scanf("%d", &value);
+                insertAtBeginning(value);
+                break;
+            case 2:
+                display();
+                break;
+            case 3:
+                printf("Exiting the program.\n");
+                break;
+            default:
+                printf("Invalid choice. Please try again.\n");
+        }
+    } while (choice != 3);
 
     return 0;
 }
-
-OUTPUT:
-Circular Doubly Linked List: 1 2 3 4 
+output:
+Enter your choice: Display
+Invalid choice. Please try again.
