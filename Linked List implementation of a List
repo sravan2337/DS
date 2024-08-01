@@ -6,35 +6,49 @@ struct Node {
     struct Node* next;
 };
 
-void printList(struct Node* n) {
-    while (n != NULL) {
-        printf("%d ", n->data);
-        n = n->next;
+struct Node* head = NULL;
+
+void insert(int new_data) {
+    struct Node* new_node = (struct Node*)malloc(sizeof(struct Node));
+    new_node->data = new_data;
+    new_node->next = head;
+    head = new_node;
+}
+
+void display() {
+    struct Node* temp = head;
+    while (temp != NULL) {
+        printf("%d ", temp->data);
+        temp = temp->next;
     }
+    printf("\n");
 }
 
 int main() {
-    struct Node* head = NULL;
-    struct Node* second = NULL;
-    struct Node* third = NULL;
+    int choice, data;
+    do {
+        printf("1. Insert\n2. Display\n3. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
 
-    head = (struct Node*)malloc(sizeof(struct Node));
-    second = (struct Node*)malloc(sizeof(struct Node));
-    third = (struct Node*)malloc(sizeof(struct Node));
-
-    head->data = 1;
-    head->next = second;
-
-    second->data = 2;
-    second->next = third;
-
-    third->data = 3;
-    third->next = NULL;
-
-    printList(head);
+        switch (choice) {
+            case 1:
+                printf("Enter data to insert: ");
+                scanf("%d", &data);
+                insert(data);
+                break;
+            case 2:
+                display();
+                break;
+            case 3:
+                exit(0);
+            default:
+                printf("Invalid choice\n");
+        }
+    } while (choice != 3);
 
     return 0;
 }
-
-OUTPUT:
-1 2 3 
+output:
+Enter your choice: Insert
+Invalid choice
