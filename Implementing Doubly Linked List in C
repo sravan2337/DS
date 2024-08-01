@@ -1,0 +1,64 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* prev;
+    struct Node* next;
+};
+
+struct Node* head = NULL;
+
+void insertAtBeginning(int new_data) {
+    struct Node* new_node = (struct Node*)malloc(sizeof(struct Node));
+    new_node->data = new_data;
+    new_node->prev = NULL;
+    new_node->next = head;
+
+    if (head != NULL)
+        head->prev = new_node;
+
+    head = new_node;
+}
+
+void insertAtEnd(int new_data) {
+    struct Node* new_node = (struct Node*)malloc(sizeof(struct Node));
+    struct Node* last = head;
+    new_node->data = new_data;
+    new_node->next = NULL;
+
+    if (head == NULL) {
+        new_node->prev = NULL;
+        head = new_node;
+        return;
+    }
+
+    while (last->next != NULL)
+        last = last->next;
+
+    last->next = new_node;
+    new_node->prev = last;
+}
+
+void displayList() {
+    struct Node* temp = head;
+    printf("Doubly linked list: ");
+    while (temp != NULL) {
+        printf("%d ", temp->data);
+        temp = temp->next;
+    }
+}
+
+int main() {
+    insertAtEnd(1);
+    insertAtBeginning(2);
+    insertAtEnd(3);
+    insertAtBeginning(4);
+
+    displayList();
+
+    return 0;
+}
+
+OUT PUT:
+Doubly linked list: 4 2 1 3 
