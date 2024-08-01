@@ -1,0 +1,59 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+    struct Node* prev;
+};
+
+struct Node* head = NULL;
+
+void insertAtEnd(int data) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    struct Node* last = head;
+
+    newNode->data = data;
+    newNode->next = head;
+    newNode->prev = NULL;
+
+    if (head == NULL) {
+        head = newNode;
+        head->next = head;
+        head->prev = head;
+    } else {
+        while (last->next != head) {
+            last = last->next;
+        }
+
+        last->next = newNode;
+        newNode->prev = last;
+        head->prev = newNode;
+    }
+}
+
+void display() {
+    struct Node* temp = head;
+
+    if (head != NULL) {
+        do {
+            printf("%d ", temp->data);
+            temp = temp->next;
+        } while (temp != head);
+    }
+}
+
+int main() {
+    insertAtEnd(1);
+    insertAtEnd(2);
+    insertAtEnd(3);
+    insertAtEnd(4);
+
+    printf("Circular Doubly Linked List: ");
+    display();
+
+    return 0;
+}
+
+OUTPUT:
+Circular Doubly Linked List: 1 2 3 4 
