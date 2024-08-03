@@ -63,5 +63,4 @@ int main() {
     return 0;
 }
 output:
-Enter your choice: Pop
 Found
